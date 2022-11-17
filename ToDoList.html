@@ -1,0 +1,65 @@
+<html>
+<head>
+    <title>Strowblack's "To do list:"</title>
+</head>
+<body>
+    <p>To do list:</p>
+    <input type="text" id="tareas">
+    <button id="añadir">Añadir tarea</button>
+    <button id="borrar">Borrar tarea</button>
+    <ul id="lista"> </ul>
+    <script type="text/javascript">
+        var tarea = document.getElementById("tareas");
+        var listas = [
+        ]
+        var todoList = document.querySelector('#lista');
+        var añadir =  document.getElementById('añadir');
+        var borrar =  document.getElementById('borrar');
+        añadir.addEventListener("click", function(){
+            borrarlista();
+            tareaañadir();
+            crearlista();
+        });
+        borrar.addEventListener("click", function(){
+            borrarlista();
+            borrartarea();
+            crearlista();
+        });
+        function tareaañadir(){
+            if(listas.indexOf(tarea.value)==-1){
+                listas.push(tarea.value);
+            } else{
+                alert("Esa tarea ya existe")
+            }
+        }
+        function borrartarea(){
+            if(listas.indexOf(tarea.value)==-1){
+                alert("Esa tarea no existe")
+            } else{
+                var x;
+                for(let i=0; i<listas.length;i++){
+                    if(listas[i]==tarea.value){
+                        x = i;
+                    }
+                }
+                listas.splice(x)
+            }
+        }
+        function borrarlista(){
+            for(let i=0; i<listas.length;i++){
+            var eliminarElemento = document.getElementById('elemento_'+i);
+            todoList.removeChild(eliminarElemento);
+            }
+        }
+        function crearlista(){
+            for(let i=0; i<listas.length;i++){
+            var list = listas[i];
+            var li = document.createElement('li');
+            li.textContent = list;
+            li.id='elemento_'+i;
+            todoList.appendChild(li);
+            }
+        }
+    </script>
+</body>
+</html>
