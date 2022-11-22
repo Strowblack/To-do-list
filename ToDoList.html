@@ -1,12 +1,16 @@
 <html>
+
 <head>
     <title>Strowblack's "To do list:"</title>
 </head>
+
 <body>
     <p>To do list:</p>
     <input type="text" id="tareas">
     <button id="añadir">Añadir tarea</button>
     <button id="borrar">Borrar tarea</button>
+    <button id="marcar">Marcar tarea</button>
+    <button id="desmarcar">Desmarcar tarea</button>
     <ul id="lista"> </ul>
     <script type="text/javascript">
         var tarea = document.getElementById("tareas");
@@ -14,6 +18,9 @@
         var todoList = document.querySelector('#lista');
         var añadir = document.getElementById('añadir');
         var borrar = document.getElementById('borrar');
+        var marcar = document.getElementById('marcar');
+        var desmarcar = document.getElementById('desmarcar');
+        var listaverde = [];
         añadir.addEventListener("click", function () {
             borrarlista();
             tareaañadir();
@@ -24,6 +31,54 @@
             borrartarea();
             crearlista();
         });
+        marcar.addEventListener("click", function () {
+            marcartarea();
+        });
+        desmarcar.addEventListener("click", function () {
+            desmarcartarea();
+        });
+        function marcartarea() {
+            if (listas.indexOf(tarea.value) == -1) {
+                alert("No existe esa tarea")
+            } else {
+                var x = 0;
+                for (var i = 0; i < listas.length; i++) {
+                    if (listas[i] == tarea.value) {
+                        x = i;
+                    }
+                }
+                var objeto = document.getElementById("elemento_" + x);
+                if (listaverde.indexOf(listas[x]) == -1) {
+                    listaverde.push(listas[x]);
+                }
+                objeto.style.color = "Green";
+            }
+        }
+        function desmarcartarea() {
+            if (listas.indexOf(tarea.value) == -1) {
+                alert("No existe esa tarea")
+            } else {
+                var x = 0;
+                for (var i = 0; i < listas.length; i++) {
+                    if (listas[i] == tarea.value) {
+                        x = i;
+                    }
+                }
+                var objeto = document.getElementById("elemento_" + x);
+                if (listaverde.indexOf(listas[x]) == -1) {
+                } else {
+                    var eliminarlistaverde = [];
+                    for (let i = 0; i < listaverde.length; i++) {
+                        if (listaverde[i] == listas[x]) {
+                        } else {
+                            eliminarlistaverde.push(listaverde[i]);
+                        }
+                    }
+                    listaverde = eliminarlistaverde;
+                }
+                objeto.style.color = "Red";
+            }
+        }
         function tareaañadir() {
             if (listas.indexOf(tarea.value) == -1) {
                 listas.push(tarea.value);
@@ -36,16 +91,16 @@
                 alert("Esa tarea no existe")
             } else {
                 var eliminarlista = [];
-                var x=listas.length;
-                for (let i = 0; i < x; i++) {
+                var x = 0;
+                for (let i = 0; i < listas.length; i++) {
                     if (listas[i] == tarea.value) {
-                    }else{
+                        x=i;
+                    } else {
                         eliminarlista.push(listas[i])
                     }
                 }
                 listas = eliminarlista;
             }
-
         }
         function borrarlista() {
             for (let i = 0; i < listas.length; i++) {
@@ -59,9 +114,15 @@
                 var li = document.createElement('li');
                 li.textContent = list;
                 li.id = 'elemento_' + i;
+                if(listaverde.indexOf(li.textContent)==-1){
+                    li.style.color="Red";
+                }else{
+                    li.style.color="Green";
+                }
                 todoList.appendChild(li);
             }
         }
     </script>
 </body>
+
 </html>
