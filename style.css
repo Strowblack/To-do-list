@@ -1,0 +1,19 @@
+body{
+   text-align: center;
+}
+.fr{
+    float: right;
+}
+.cb{
+    clear: both;
+}
+.w_7{
+    margin: 0 auto;
+    width: 49%;
+}
+.bg_a{
+    background-color: rgb(244, 249, 174);
+}
+#lista{
+    padding-top: 10px;
+}

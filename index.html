@@ -2,6 +2,10 @@
 
 <head>
     <title>Strowblack's "To do list:"</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -21,6 +25,7 @@
         var marcar = document.getElementById('marcar');
         var desmarcar = document.getElementById('desmarcar');
         var listaverde = [];
+        var listaroja = [];
         añadir.addEventListener("click", function () {
             borrarlista();
             tareaañadir();
@@ -48,6 +53,17 @@
                     }
                 }
                 var objeto = document.getElementById("elemento_" + x);
+                if (listaroja.indexOf(listas[x]) == -1) {
+                } else {
+                    var eliminarlistaroja = [];
+                    for (let i = 0; i < listaroja.length; i++) {
+                        if (listaroja[i] == listas[x]) {
+                        } else {
+                            eliminarlistaroja.push(listaroja[i]);
+                        }
+                    }
+                    listaroja = eliminarlistaroja;
+                }
                 if (listaverde.indexOf(listas[x]) == -1) {
                     listaverde.push(listas[x]);
                 }
@@ -75,6 +91,9 @@
                         }
                     }
                     listaverde = eliminarlistaverde;
+                }
+                if (listaroja.indexOf(listas[x]) == -1) {
+                    listaroja.push(listas[x]);
                 }
                 objeto.style.color = "Red";
             }
@@ -113,13 +132,24 @@
                 var list = listas[i];
                 var li = document.createElement('li');
                 li.textContent = list;
+                li.classList.add("cb","w_7","bg_a")
                 li.id = 'elemento_' + i;
-                if(listaverde.indexOf(li.textContent)==-1){
+                
+                if(listaverde.indexOf(li.textContent)==0){
+                    li.style.color="Green";
+                }else if(listaroja.indexOf(li.textContent)==0){
                     li.style.color="Red";
                 }else{
-                    li.style.color="Green";
+                    li.style.color="Black";
                 }
                 todoList.appendChild(li);
+                var check = document.createElement("i")
+                check.classList.add("fa-solid", "fa-check", "fr");
+                var delet = document.createElement("i");
+                delet.classList.add("fa-solid","fa-delete-left","fr");
+                var idli= document.getElementById("elemento_"+i);
+                idli.appendChild(check)
+                idli.appendChild(delet)  
             }
         }
     </script>
