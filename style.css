@@ -1,5 +1,9 @@
 body{
    text-align: center;
+   background-color: black;
+}
+.tw{
+    color: white;
 }
 .fr{
     float: right;
@@ -16,4 +20,7 @@ body{
 }
 #lista{
     padding-top: 10px;
+}
+.pj{
+    border-color: white;
 }

@@ -11,227 +11,63 @@
 </head>
 
 <body>
-    <p>To do list:</p>
+    <p><h2 class="tw">To do list:</h2></p>
     <input type="text" id="tareas">
     <button id="añadir">Añadir tarea</button>
-    <button id="borrar">Borrar tarea</button>
-    <button id="marcar">Marcar tarea</button>
-    <button id="desmarcar">Desmarcar tarea</button>
     <ul id="lista"> </ul>
     <script type="text/javascript">
-        var tarea = document.getElementById("tareas");
-        var listas = []
+        var lista = document.getElementById("lista");
+        var txttarea = document.getElementById("tareas");
         var todoList = document.querySelector('#lista');
         var añadir = document.getElementById('añadir');
-        var borrar = document.getElementById('borrar');
-        var marcar = document.getElementById('marcar');
-        var desmarcar = document.getElementById('desmarcar');
-        var listaverde = [];
-        var listaroja = [];
-        añadir.addEventListener("click", function () {
-            borrarlista();
-            tareaañadir();
-            crearlista();
-        });
-        borrar.addEventListener("click", function () {
-            borrarlista();
-            borrartarea();
-            crearlista();
-        });
-        marcar.addEventListener("click", function () {
-            marcartarea();
-        });
-        desmarcar.addEventListener("click", function () {
-            desmarcartarea();
-        });
-        function marcartarea() {
-            if (listas.indexOf(tarea.value) == -1) {
-                alert("No existe esa tarea")
-            } else {
-                var x = 0;
-                for (var i = 0; i < listas.length; i++) {
-                    if (listas[i] == tarea.value) {
-                        x = i;
-                    }
-                }
-                var objeto = document.getElementById("elemento_" + x);
-                if (listaroja.indexOf(listas[x]) == -1) {
-                } else {
-                    var eliminarlistaroja = [];
-                    for (let i = 0; i < listaroja.length; i++) {
-                        if (listaroja[i] == listas[x]) {
-                        } else {
-                            eliminarlistaroja.push(listaroja[i]);
-                        }
-                    }
-                    listaroja = eliminarlistaroja;
-                }
-                if (listaverde.indexOf(listas[x]) == -1) {
-                    listaverde.push(listas[x]);
-                }
-                objeto.style.color = "Green";
-            }
+        var tareas = [];
+        window.addEventListener("load", e => {
+        var objetorefinado;
+        if (localStorage.getItem("tareas")) {
+            var tareas= JSON.parse( localStorage.getItem("tareas"));
+            pintarTareas(tareas);
+        } else{
+            tareas = [{id:"1",descripcion:"Creado Por Strowblack",completada:true}];
         }
-        function desmarcartarea() {
-            if (listas.indexOf(tarea.value) == -1) {
-                alert("No existe esa tarea")
-            } else {
-                var x = 0;
-                for (var i = 0; i < listas.length; i++) {
-                    if (listas[i] == tarea.value) {
-                        x = i;
-                    }
-                }
-                var objeto = document.getElementById("elemento_" + x);
-                if (listaverde.indexOf(listas[x]) == -1) {
-                } else {
-                    var eliminarlistaverde = [];
-                    for (let i = 0; i < listaverde.length; i++) {
-                        if (listaverde[i] == listas[x]) {
-                        } else {
-                            eliminarlistaverde.push(listaverde[i]);
-                        }
-                    }
-                    listaverde = eliminarlistaverde;
-                }
-                if (listaroja.indexOf(listas[x]) == -1) {
-                    listaroja.push(listas[x]);
-                }
-                objeto.style.color = "Red";
-            }
-        }
-        function tareaañadir() {
-            if (listas.indexOf(tarea.value) == -1) {
-                listas.push(tarea.value);
-            } else {
-                alert("Esa tarea ya existe")
-            }
-        }
-        function borrartarea() {
-            if (listas.indexOf(tarea.value) == -1) {
-                alert("Esa tarea no existe")
-            } else {
-                var eliminarlista = [];
-                var x = 0;
-                for (let i = 0; i < listas.length; i++) {
-                    if (listas[i] == tarea.value) {
-                        x = i;
-                    } else {
-                        eliminarlista.push(listas[i])
-                    }
-                }
-                listas = eliminarlista;
-            }
-        }
-        function borrarlista() {
-            for (let i = 0; i < listas.length; i++) {
-                var eliminarElemento = document.getElementById('elemento_' + i);
-                todoList.removeChild(eliminarElemento);
-            }
-        }
-        function crearlista() {
-            for (let i = 0; i < listas.length; i++) {
-                var list = listas[i];
-                var li = document.createElement('li');
-                li.textContent = list;
-                li.classList.add("cb", "w_7", "bg_a")
-                li.id = 'elemento_' + i;
-
-                if (listaverde.indexOf(li.textContent) == 0) {
-                    li.style.color = "Green";
-                } else if (listaroja.indexOf(li.textContent) == 0) {
-                    li.style.color = "Red";
-                } else {
-                    li.style.color = "Black";
-                }
-                todoList.appendChild(li);
-                var check = document.createElement("i")
-                check.classList.add("fa-solid", "fa-check", "fr");
-                check.id = 'elemento_' + i;
-                var delet = document.createElement("i");
-                delet.classList.add('fa-solid', "fa-delete-left", "fr");
-                delet.id = 'elemento_' + i;
-                var idli = document.getElementById("elemento_" + i);
-                idli.appendChild(check);
-                idli.appendChild(delet);
-                ck = document.getElementsByClassName("fa-check");
-            }
-        }
-        const lista = document.querySelector('#lista');
-        lista.addEventListener("click", e => {
-            if (e.target.classList.contains("fa-check")) {
-                var id = e.target.id;
-                var tarea = document.getElementById(id);
-                let colorLetra = getComputedStyle(tarea);
-                var color = colorLetra.getPropertyValue("color");
-                if (color == "rgb(0, 128, 0)") {
-                    tarea.style.color = "red";
-                    if (listaverde.indexOf(tarea.textContent) == -1) {
-                    } else {
-                        var eliminarlistaverde = [];
-                        for (let i = 0; i < listaverde.length; i++) {
-                            if (listaverde[i] == tarea.textContent) {
-                            } else {
-                                eliminarlistaverde.push(listaverde[i]);
-                            }
-                        }
-                        listaverde = eliminarlistaverde;
-                    }
-                    if (listaroja.indexOf(tarea.textContent) == -1) {
-                        listaroja.push(tarea.textContent);
-                    }
-                } else if (color == "rgb(255, 0, 0)") {
-                    tarea.style.color = "green";
-                    if (listaroja.indexOf(tarea.textContent) == -1) {
-                    } else {
-                        var eliminarlistaroja = [];
-                        for (let i = 0; i < listaroja.length; i++) {
-                            if (listaroja[i] == tarea.textContent) {
-                            } else {
-                                eliminarlistaroja.push(listaroja[i]);
-                            }
-                        }
-                        listaroja = eliminarlistaroja;
-                    }
-                    if (listaverde.indexOf(tarea.textContent) == -1) {
-                        listaverde.push(tarea.textContent);
-                    }
-                } else{
-                    tarea.style.color = "green";
-                    if (listaroja.indexOf(tarea.textContent) == -1) {
-                    } else {
-                        var eliminarlistaroja = [];
-                        for (let i = 0; i < listaroja.length; i++) {
-                            if (listaroja[i] == tarea.textContent) {
-                            } else {
-                                eliminarlistaroja.push(listaroja[i]);
-                            }
-                        }
-                        listaroja = eliminarlistaroja;
-                    }
-                    if (listaverde.indexOf(tarea.textContent) == -1) {
-                        listaverde.push(tarea.textContent);
-                    }
-                }
-            }else if (e.target.classList.contains("fa-delete-left")){
-                var id = e.target.id;
-                var tarea = document.getElementById(id);
-                let colorLetra = getComputedStyle(tarea);
-                borrarlista();
-                var eliminarlista = [];
-                var x = 0;
-                for (let i = 0; i < listas.length; i++) {
-                    if (listas[i] == tarea.textContent) {
-                        x = i;
-                    } else {
-                        eliminarlista.push(listas[i])
-                    }
-                }
-                listas = eliminarlista;
-
-                crearlista();
-            }
+        añadir.addEventListener("click",e=>{
+            setTarea(e);
         })
+        
+        function setTarea(e) {
+            if (txttarea.value) {
+                const tarea = {
+                    id: new Date().getTime(),
+                    descripcion: txttarea.value,
+                    completada: false
+                }
+                tareas.push(tarea);
+
+                localStorage.setItem("tareas", JSON.stringify(tareas));
+                pintarunatarea(tarea);
+            } else {
+                console.log("no hay tarea");
+            }
+
+        }
+
+        function pintarTareas(listatarea) {
+            listatarea.forEach(tarea => {
+                if(tarea.id!=undefined){
+                    var template = `<div class="pj">
+                                    <p class="tw">Id: ${tarea.id} | Descripcion: ${tarea.descripcion} | Estado: ${tarea.completada}</p>
+                                </div>`;
+                lista.innerHTML += template;
+                }
+            console.log(tarea);
+           });
+        }
+        function pintarunatarea(tarea){
+            var template = `<div class="pj">
+                                    <p class="tw">Id: ${tarea.id} | Descripcion: ${tarea.descripcion} | Estado: ${tarea.completada}</p>
+                                </div>`;
+            lista.innerHTML += template;
+        }
+    })
     </script>
 </body>
 
